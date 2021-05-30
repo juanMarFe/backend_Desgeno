@@ -3,6 +3,7 @@ package com.example.software;
 import com.example.software.controlador.Facade;
 import com.example.software.controlador.FolderProxy;
 import com.example.software.modelo.Empresa;
+import com.example.software.modelo.Oferta;
 import com.example.software.modelo.PsicologoAdapter;
 import com.example.software.modelo.Trabajador;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +47,7 @@ public class Controller {
 	@GetMapping("/verTrabajador/{key}")
 	public String verTrabajador(@PathVariable String key) {
 		String f = key.replaceAll("_","/");
-		Trabajador temp = facade.BuscarTrabajadorKey(f);
+		Trabajador temp = facade.R_Trabajador(f);
 		if (temp==null){
 			return "No existe el trabajador";
 		}else{
@@ -121,11 +122,48 @@ public class Controller {
 		return temp.getLogin()+","+temp.getPassword()+","+temp.getNombre()+","+temp.getDocumento();
 	}
 
-	@GetMapping("/readPsicoLogin/{key}")
+	@GetMapping("/readPsicoLogin/{login}")
 	public String readPsicoLogin(@PathVariable String login) {
-		PsicologoAdapter temp= facade.R_Psicologo(login);
+		PsicologoAdapter temp= facade.BuscarPsicologos(login);
 		return temp.getLogin()+","+temp.getPassword()+","+temp.getNombre()+","+temp.getDocumento();
 	}
 
+	@GetMapping("/updatePsico/{viejoPointer}/{login}/{password}/{nombre}/{documento}/{key}")
+	public String updatePsico(@PathVariable String viejoPointer,@PathVariable String login, @PathVariable String password,@PathVariable String nombre,@PathVariable String documento, @PathVariable String key){
+		return facade.U_Psicologo(viejoPointer, login, password, nombre, documento, key);
+	}
+	@GetMapping("/deletePsico/{index}/{key}")
+	public String deletePsico(@PathVariable String index, @PathVariable String key){
+		return facade.D_Psicologo(index, key);
+	}
+	////////////////////////////////////////Crud Agrupaciones/////////////////////////////
 
+	@GetMapping("/createAgrupacionEmpresa/{pointer}/{pointer2}")
+	public String createAgrupacionEmpresa(@PathVariable String pointer, @PathVariable String pointer2){
+		try {
+			facade.C_AgrupacionEmpresa(pointer, pointer2);
+			return "Se creó la agrupación correctamente";
+		}catch (Exception e){
+			return "Hubo un error en la transacción";
+		}
+	}
+
+	@GetMapping("/readUnicaOferta/{codigo}/{pointer}")
+	public String readUnicaOferta(@PathVariable String codigo, @PathVariable String pointer){
+		String temp = facade.R_UnicaOferta(codigo, pointer);
+		if (temp==null){
+			return "null";
+		}
+		return temp;
+	}
+
+	@GetMapping("/deleteOferta/{codigo}/{pointer}")
+	public String deleteOferta(@PathVariable String codigo, @PathVariable String pointer){
+		try {
+			facade.D_Oferta(codigo,pointer);
+			return "Se borró la agrupación correctamente";
+		}catch (Exception e){
+			return "Hubo un error en la transacción";
+		}
+	}
 }

@@ -97,19 +97,6 @@ public class Facade implements IFolder {
 			return null;
 		}
 	}
-	public Trabajador BuscarTrabajadorKey(String key) {
-		try {
-			Usuario u = usuarios.getUsuario(decodificadorUsuario(key));
-			if (u instanceof Trabajador) {
-				return (Trabajador) u;
-			} else {
-				return null;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 
 	public PsicologoAdapter BuscarPsicologos(String login) {
 		try {
