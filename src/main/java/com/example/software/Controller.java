@@ -79,7 +79,7 @@ public class Controller {
 	}
 	@GetMapping("/readEmpresalogin/{login}")
 	public  String readEmpresaLogin(@PathVariable String login){
-		Empresa temp=facade.R_Empresa(login);
+		Empresa temp=facade.BuscarEmpresas(login);
 		return temp.getLogin()+","+temp.getPassword()+","+temp.getNombre()+","+temp.getDireccion()+","+temp.getNIT()+","+temp.verDatos();
 	}
 
