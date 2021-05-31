@@ -54,7 +54,7 @@ public class Controller {
 			return temp.getLogin()+","+temp.getPassword()+","+temp.getNombre()+","+temp.getDocumento();
 		}
 	}
-	@GetMapping("/verTrabajadorLogin/login")
+	@GetMapping("/verTrabajadorLogin/{login}")
 	public String verTrabajadorLogin(@PathVariable String login) {
 		Trabajador temp = facade.BuscarTrabajadores(login);
 		if (temp==null){
@@ -166,4 +166,11 @@ public class Controller {
 			return "Hubo un error en la transacción";
 		}
 	}
+
+	@GetMapping("/createAgripacionOferta/{codigo}/{cargo}/{descripcion}/{pointer}")
+	public String deleteEmpresaDeEmpresa(@PathVariable String codigo, @PathVariable String cargo, @PathVariable String descripcion, @PathVariable String pointer){
+		return facade.C_AgrupacionOferta(codigo, cargo, descripcion, pointer);
+
+	}
+
 }

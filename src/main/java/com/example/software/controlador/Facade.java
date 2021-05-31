@@ -112,7 +112,7 @@ public class Facade implements IFolder {
 		}
 	}
 
-	private boolean EliminarEmpresadeEmpresa(String sEmpresaPadre, String kEmpresaHija) {
+	private boolean eliminarEmpresadeEmpresa(String sEmpresaPadre, String kEmpresaHija) {
 		try {
 			Empresa empresaPadre = BuscarEmpresas(sEmpresaPadre);
 			Empresa empresaHija = R_Empresa(kEmpresaHija);
@@ -218,7 +218,7 @@ public class Facade implements IFolder {
 			if (u instanceof Administrador || u instanceof Empresa) {
 				Empresa m = (Empresa) u;
 				if (m.getPadre() != null) {
-					EliminarEmpresadeEmpresa(m.getPadre(), key);
+					eliminarEmpresadeEmpresa(m.getPadre(), key);
 				}
 				boolean c = usuarios.deleteUsuario(index);
 				if (c) {
@@ -398,9 +398,17 @@ public class Facade implements IFolder {
 
 	// --------------------------------------------CRUD
 	// AGRUPACIONES--------------------------------------------
-	public void C_AgrupacionOferta(Agrupacion oferta, String pointer) {
-		Empresa empresa = (Empresa) usuarios.getUsuario(pointer);
-		empresa.addAgrupacion(oferta);
+	public String C_AgrupacionOferta(String codigo,String cargo,String descripcion, String pointer) {
+		Agrupacion temp=new Oferta(codigo,cargo,descripcion);
+		if (temp instanceof Oferta){
+			Empresa empresa = (Empresa) usuarios.getUsuario(pointer);
+			empresa.addAgrupacion(temp);
+			return "La oferta se ha añadido correctamente";
+		}
+		else {
+			return "Hubo un error en la transacción";
+		}
+
 	}
 
 	public void C_AgrupacionEmpresa(String pointer, String pointer2) {
