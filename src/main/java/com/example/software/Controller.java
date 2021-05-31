@@ -75,7 +75,7 @@ public class Controller {
 	public  String readEmpresa(@PathVariable String key){
 		String f = key.replaceAll("_","/");
 		Empresa temp=facade.R_Empresa(f);
-		return temp.getLogin()+","+temp.getPassword()+","+temp.getNombre()+","+temp.getDireccion()+","+temp.getNIT();
+		return temp.getLogin()+","+temp.getPassword()+","+temp.getNombre()+","+temp.getDireccion()+","+temp.getNIT()+","+temp.verDatos();
 	}
 	@GetMapping("/readEmpresalogin/{login}")
 	public  String readEmpresaLogin(@PathVariable String login){
