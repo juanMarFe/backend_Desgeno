@@ -22,13 +22,13 @@ public class OfertaDecoratorTest {
 	@Test
 	public void testOferta() {
 		String datosOferta = oferta1.verDatos();
-		assertEquals(datosOferta, " Oferta de codigo 1 Se busca Software Engineer. Descripcion: Un trabajo fuerte.");
+		assertEquals(datosOferta, "Oferta de codigo 1 Se busca Software Engineer. Descripcion: Un trabajo fuerte.");
 	}
 	
 	@Test
 	public void testDecoration() {
 		String datosOferta = oferta2.verDatos();
-		assertEquals(datosOferta, " Oferta de codigo 1 Se busca Software Engineer. Descripcion: Un trabajo fuerte. Sueldo mensual: 500000.0");
+		assertEquals(datosOferta, "Oferta de codigo 1 Se busca Software Engineer. Descripcion: Un trabajo fuerte. Sueldo mensual: 500000.0");
 	}
 
 }

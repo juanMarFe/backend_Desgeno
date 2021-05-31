@@ -24,7 +24,7 @@ public class FolderProxyTest {
 	@Test
 	public void testSuccess() {
 		String response = rightFolder.performOperation();
-		assertEquals(response, true);
+		assertEquals(response, null);
 	}
 	
 	@Test
