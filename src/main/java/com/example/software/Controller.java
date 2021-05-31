@@ -80,7 +80,7 @@ public class Controller {
 	@GetMapping("/readEmpresalogin/{login}")
 	public  String readEmpresaLogin(@PathVariable String login){
 		Empresa temp=facade.R_Empresa(login);
-		return temp.getLogin()+","+temp.getPassword()+","+temp.getNombre()+","+temp.getDireccion()+","+temp.getNIT();
+		return temp.getLogin()+","+temp.getPassword()+","+temp.getNombre()+","+temp.getDireccion()+","+temp.getNIT()+","+temp.verDatos();
 	}
 
 	@GetMapping("/updateEmpresa/{viejoPointer}/{login}/{password}/{nit}/{nombre}/{direccion}/{key}")
@@ -118,11 +118,13 @@ public class Controller {
 
 	@GetMapping("/updatePsico/{viejoPointer}/{login}/{password}/{nombre}/{documento}/{key}")
 	public String updatePsico(@PathVariable String viejoPointer,@PathVariable String login, @PathVariable String password,@PathVariable String nombre,@PathVariable String documento, @PathVariable String key){
-		return facade.U_Psicologo(viejoPointer, login, password, nombre, documento, key);
+		String f = key.replaceAll("_","/");
+		return facade.U_Psicologo(viejoPointer, login, password, nombre, documento, f);
 	}
 	@GetMapping("/deletePsico/{index}/{key}")
 	public String deletePsico(@PathVariable String index, @PathVariable String key){
-		return facade.D_Psicologo(index, key);
+		String f = key.replaceAll("_","/");
+		return facade.D_Psicologo(index, f);
 	}
 	////////////////////////////////////////Crud Agrupaciones/////////////////////////////
 
@@ -138,11 +140,17 @@ public class Controller {
 
 	@GetMapping("/readUnicaOferta/{codigo}/{pointer}")
 	public String readUnicaOferta(@PathVariable String codigo, @PathVariable String pointer){
-		String temp = facade.R_UnicaOferta(codigo, pointer);
-		if (temp==null){
+
+		try {
+			String temp = facade.R_UnicaOferta(codigo, pointer);
+			if (temp==null){
+				return "null";
+			}
+			return temp;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return "null";
 		}
-		return temp;
 	}
 
 	@GetMapping("/deleteOferta/{codigo}/{pointer}")
@@ -156,15 +164,21 @@ public class Controller {
 	}
 
 	@GetMapping("/createAgripacionOferta/{codigo}/{cargo}/{descripcion}/{pointer}")
-	public String deleteEmpresaDeEmpresa(@PathVariable String codigo, @PathVariable String cargo, @PathVariable String descripcion, @PathVariable String pointer){
+	public String createAgripacionOferta(@PathVariable String codigo, @PathVariable String cargo, @PathVariable String descripcion, @PathVariable String pointer){
 		return facade.C_AgrupacionOferta(codigo, cargo, descripcion, pointer);
-
 	}
+
+	@GetMapping("/createAgripacionOfertaSueldo/{codigo}/{cargo}/{descripcion}/{pointer}/{sueldo}")
+	public String createAgripacionOfertaSueldo(@PathVariable String codigo, @PathVariable String cargo, @PathVariable String descripcion, @PathVariable String pointer,@PathVariable String sueldo){
+		return facade.C_AgrupacionOfertaSueldo(codigo, cargo, descripcion,sueldo,pointer);
+	}
+
 	////////////////////////Otros/////////////////////////////////////////////////////
 
 	@GetMapping("/tipoUsuario/{key}")
 	public String tipoUsuario(@PathVariable String key){
-		Usuario temp = facade.obtenerUsuario(key);
+		String f = key.replaceAll("_","/");
+		Usuario temp = facade.obtenerUsuario(f);
 		return temp.getTipoUsuario();
 	}
 

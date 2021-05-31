@@ -10,14 +10,8 @@ import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import com.example.software.modelo.Administrador;
-import com.example.software.modelo.Agrupacion;
-import com.example.software.modelo.Empresa;
-import com.example.software.modelo.Oferta;
-import com.example.software.modelo.PsicologoAdapter;
-import com.example.software.modelo.Trabajador;
-import com.example.software.modelo.Usuario;
-import com.example.software.modelo.UsuarioFactory;
+
+import com.example.software.modelo.*;
 
 public class Facade implements IFolder {
 
@@ -50,24 +44,6 @@ public class Facade implements IFolder {
 
 	public String getAllTrabajadores() {
 		return usuarios.getAllTrabajadores();
-	}
-
-	public String R_TodasLasOfertas() {
-		String temp = "";
-		for (Usuario key : this.usuarios.getList().values()) {
-			if (key.getTipoUsuario().equals("Empresa")) {
-				Empresa empresa = (Empresa) usuarios.getUsuario(key.getLogin());
-				temp = empresa.verDatos();
-			}
-		}
-		return temp;
-	}
-
-	public String R_UnicaOferta(String codigo, String pointer) {
-		Empresa empresa = (Empresa) usuarios.getUsuario(pointer);
-		Oferta oferta = empresa.getOfertaIndividual(codigo);
-
-		return oferta.verDatos();
 	}
 
 	public Empresa BuscarEmpresas(String login) {
@@ -411,6 +387,19 @@ public class Facade implements IFolder {
 
 	}
 
+	public String C_AgrupacionOfertaSueldo(String codigo,String cargo,String descripcion,String sueldo, String pointer) {
+		Agrupacion temp=new SueldoMensual(new Oferta(codigo, cargo, descripcion),Float.parseFloat(sueldo));
+		if (temp instanceof SueldoMensual){
+			Empresa empresa = (Empresa) usuarios.getUsuario(pointer);
+			empresa.addAgrupacion(temp);
+			return "La oferta se ha añadido correctamente";
+		}
+		else {
+			return "Hubo un error en la transacción";
+		}
+
+	}
+
 	public void C_AgrupacionEmpresa(String pointer, String pointer2) {
 		Empresa empresa = (Empresa) usuarios.getUsuario(pointer);
 		Empresa subEmpresa = (Empresa) usuarios.getUsuario(pointer2);
@@ -456,6 +445,24 @@ public class Facade implements IFolder {
 			System.out.println("Error while decrypting: " + e.toString());
 			return null;
 		}
+	}
+
+	public String R_TodasLasOfertas() {
+		String temp = "";
+		for (Usuario key : this.usuarios.getList().values()) {
+			if (key.getTipoUsuario().equals("Empresa")) {
+				Empresa empresa = (Empresa) usuarios.getUsuario(key.getLogin());
+				temp = empresa.verDatos();
+			}
+		}
+		return temp;
+	}
+
+	public String R_UnicaOferta(String codigo, String pointer) {
+		Empresa empresa = (Empresa) usuarios.getUsuario(pointer);
+		Oferta oferta = empresa.getOfertaIndividual(codigo);
+		System.out.println(oferta.verDatos());
+		return oferta.verDatos();
 	}
 
 	@Override
