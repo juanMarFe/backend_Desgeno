@@ -22,6 +22,11 @@ public class ControllerTest {
     private Facade facade=Facade.crearInstaSingleton();
     Usuario t1 = new Trabajador("gabriel", "123", "98", "1");
 
+    public ControllerTest() {
+        facade.C_Trabajador("gabriel", "123", "98", "1");
+        System.out.println(  );
+
+    }
     @Test
     public void testLogin() {
         String login = t1.getLogin();
@@ -45,87 +50,69 @@ public class ControllerTest {
      */
     @Test
     public void testVerTrabajador() {
-        String key="1";
-        String f = key.replaceAll("_","/");
-        facade.C_Trabajador("gabriel", "123", "98", "1");
-        Trabajador temp = facade.R_Trabajador(f);
-        assertEquals(temp.getLogin(), t1.getLogin());
+        String key="gabriel";
+
+        Trabajador temp = facade.R_Trabajador(key);
+        if (temp==null){
+            assertEquals(null, temp);
+        }else{
+            assertEquals(temp.getLogin(), t1.getLogin());
+        }
+
     }
 
-    /**
-     * Test of verTrabajadorLogin method, of class Controller.
-     */
+
+
     @Test
     public void testVerTrabajadorLogin() {
-        System.out.println("verTrabajadorLogin");
-        String login = "";
-        Controller instance = new Controller();
-        String expResult = "";
-        String result = instance.verTrabajadorLogin(login);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        facade.C_Trabajador("gabriel", "123", "98", "1");
+        Trabajador temp = facade.BuscarTrabajadores("gabriel");
+        if (temp!=null){
+                    assertEquals("gabriel", temp.getLogin() );
+        }
     }
 
-    /**
-     * Test of updateTrabajador method, of class Controller.
-     */
     @Test
     public void testUpdateTrabajador_6args() {
         System.out.println("updateTrabajador");
-        String viejoPointer = "";
-        String login = "";
-        String password = "";
-        String nombre = "";
-        String documento = "";
-        String key = "";
-        Controller instance = new Controller();
-        String expResult = "";
-        String result = instance.updateTrabajador(viejoPointer, login, password, nombre, documento, key);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String viejoPointer = "gabriel";
+        String login = "gabriel";
+        String password = "123";
+        String nombre = "68";
+        String documento = "1";
+         facade.U_Trabajador(viejoPointer,login,password,nombre,documento,"");
+        assertEquals("gabriel",t1.getLogin() );
     }
 
-    /**
-     * Test of deleteTrabajador method, of class Controller.
-     */
     @Test
     public void testDeleteTrabajador() {
         System.out.println("deleteTrabajador");
-        String index = "";
-        String key = "";
+        facade.C_Trabajador("gabriel", "123", "98", "1");
+        String index = "0";
+        String key = "123";
         Controller instance = new Controller();
-        String expResult = "";
+        String expResult = null;
         String result = instance.deleteTrabajador(index, key);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of createEmpresa method, of class Controller.
-     */
+
     @Test
     public void testCreateEmpresa() {
+
         System.out.println("createEmpresa");
-        String login = "";
-        String password = "";
-        String nit = "";
-        String nombre = "";
-        String direccion = "";
-        String key = "";
+        String login = "empi";
+        String password = "123";
+        String nit = "1";
+        String nombre = "e";
+        String direccion = "123";
+        String key = null;
         Controller instance = new Controller();
         String expResult = "";
         String result = instance.createEmpresa(login, password, nit, nombre, direccion, key);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of readEmpresa method, of class Controller.
-     */
     @Test
     public void testReadEmpresa() {
         System.out.println("readEmpresa");
@@ -134,49 +121,36 @@ public class ControllerTest {
         String expResult = "";
         String result = instance.readEmpresa(key);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of readEmpresaLogin method, of class Controller.
-     */
     @Test
     public void testReadEmpresaLogin() {
-        System.out.println("readEmpresaLogin");
-        String login = "";
-        Controller instance = new Controller();
-        String expResult = "";
-        String result = instance.readEmpresaLogin(login);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String key="123";
+
+        Empresa temp = facade.R_Empresa(key);
+        if (temp==null){
+            assertEquals(null, temp);
+        }else{
+            assertEquals(temp.getLogin(), t1.getLogin());
+        }
     }
 
-    /**
-     * Test of updateTrabajador method, of class Controller.
-     */
     @Test
     public void testUpdateTrabajador_7args() {
         System.out.println("updateTrabajador");
-        String viejoPointer = "";
-        String login = "";
-        String password = "";
-        String nit = "";
-        String nombre = "";
-        String direccion = "";
-        String key = "";
+        String viejoPointer = "gabriel";
+        String login = "gabriel";
+        String password = "123";
+        String nit = "1";
+        String nombre = "12";
+        String direccion = "2";
+        String key = "123";
         Controller instance = new Controller();
         String expResult = "";
         String result = instance.updateTrabajador(viejoPointer, login, password, nit, nombre, direccion, key);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of deleteEmpresa method, of class Controller.
-     */
     @Test
     public void testDeleteEmpresa() {
         System.out.println("deleteEmpresa");
@@ -186,13 +160,8 @@ public class ControllerTest {
         String expResult = "";
         String result = instance.deleteEmpresa(index, key);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of createPsico method, of class Controller.
-     */
     @Test
     public void testCreatePsico() {
         System.out.println("createPsico");
@@ -204,13 +173,8 @@ public class ControllerTest {
         String expResult = "";
         String result = instance.createPsico(login, password, nombre, documento);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of readPsico method, of class Controller.
-     */
     @Test
     public void testReadPsico() {
         System.out.println("readPsico");
@@ -219,13 +183,8 @@ public class ControllerTest {
         String expResult = "";
         String result = instance.readPsico(key);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of readPsicoLogin method, of class Controller.
-     */
     @Test
     public void testReadPsicoLogin() {
         System.out.println("readPsicoLogin");
@@ -234,13 +193,8 @@ public class ControllerTest {
         String expResult = "";
         String result = instance.readPsicoLogin(login);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of updatePsico method, of class Controller.
-     */
     @Test
     public void testUpdatePsico() {
         System.out.println("updatePsico");
@@ -254,13 +208,8 @@ public class ControllerTest {
         String expResult = "";
         String result = instance.updatePsico(viejoPointer, login, password, nombre, documento, key);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of deletePsico method, of class Controller.
-     */
     @Test
     public void testDeletePsico() {
         System.out.println("deletePsico");
@@ -270,13 +219,8 @@ public class ControllerTest {
         String expResult = "";
         String result = instance.deletePsico(index, key);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of createAgrupacionEmpresa method, of class Controller.
-     */
     @Test
     public void testCreateAgrupacionEmpresa() {
         System.out.println("createAgrupacionEmpresa");
@@ -286,13 +230,8 @@ public class ControllerTest {
         String expResult = "";
         String result = instance.createAgrupacionEmpresa(pointer, pointer2);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of readUnicaOferta method, of class Controller.
-     */
     @Test
     public void testReadUnicaOferta() {
         System.out.println("readUnicaOferta");
@@ -302,13 +241,8 @@ public class ControllerTest {
         String expResult = "";
         String result = instance.readUnicaOferta(codigo, pointer);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of deleteOferta method, of class Controller.
-     */
     @Test
     public void testDeleteOferta() {
         System.out.println("deleteOferta");
@@ -318,8 +252,6 @@ public class ControllerTest {
         String expResult = "";
         String result = instance.deleteOferta(codigo, pointer);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
