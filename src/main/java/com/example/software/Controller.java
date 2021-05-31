@@ -2,10 +2,7 @@ package com.example.software;
 
 import com.example.software.controlador.Facade;
 import com.example.software.controlador.FolderProxy;
-import com.example.software.modelo.Empresa;
-import com.example.software.modelo.Oferta;
-import com.example.software.modelo.PsicologoAdapter;
-import com.example.software.modelo.Trabajador;
+import com.example.software.modelo.*;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -27,15 +24,6 @@ public class Controller {
 		return f;
 	}
 
-
-
-	@GetMapping("/test/{key}")
-	public byte[] test(@PathVariable String key) {
-		byte[] bt= new byte[2];
-		bt[0]='a';
-		bt[1]='b';
-		return bt;
-	}
 
 	//////////////////////////Crud Trabajador///////////////////////////////////////////////////////
 
@@ -172,5 +160,41 @@ public class Controller {
 		return facade.C_AgrupacionOferta(codigo, cargo, descripcion, pointer);
 
 	}
+	////////////////////////Otros/////////////////////////////////////////////////////
 
+	@GetMapping("/tipoUsuario/{key}")
+	public String tipoUsuario(@PathVariable String key){
+		Usuario temp = facade.obtenerUsuario(key);
+		return temp.getTipoUsuario();
+	}
+
+	@GetMapping("/getAllTrabajadores")
+	public String getAllTrabajadores(){
+		try {
+			String temp= facade.getAllTrabajadores();
+			if (temp==null){
+				return "No hay trabajadores que mostrar";
+			}else{
+				return temp;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "No hay trabajadores que mostrar";
+		}
+	}
+
+	@GetMapping("/R_TodasLasOfertas")
+	public String R_TodasLasOfertas(){
+		try {
+			String temp= facade.R_TodasLasOfertas();
+			if (temp==null){
+				return "No hay ofertas que mostrar";
+			}else{
+				return temp;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "No hay ofertas que mostrar";
+		}
+	}
 }
